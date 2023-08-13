@@ -1,13 +1,16 @@
 import { createStore, combineReducers, applyMiddleware } from "redux"
 import thunk from "redux-thunk"
 import { composeWithDevTools } from "redux-devtools-extension"
-import { allUsersReducer, userReducer } from '../redux/reducers/userReducers'
-import { allTasksReducer, singleTaskReducer } from "./reducers/taskReducers";
-import { allClubsReducer, setRoleReducer, singleClubReducer } from "./reducers/clubReducers";
-import { allSubtasksReducer, singleSubtaskReducer } from "./reducers/subTaskReducers";
+import { allUsersReducer, forgotPasswordReducer, profileReducer, userDetailsReducer, userReducer } from "./reducers/userReducer";
+import { allTasksReducer, singleTaskReducer } from "./reducers/taskReducer";
+import { allClubsReducer, setRoleReducer, singleClubReducer } from "./reducers/clubReducer";
+import { allSubtasksReducer, singleSubtaskReducer } from "./reducers/subTaskReducer";
 
 const reducer = combineReducers({
     user: userReducer,
+    profile: profileReducer,
+    forgotPassword: forgotPasswordReducer,
+    userDetails: userDetailsReducer,
     users: allUsersReducer,
     club: singleClubReducer,
     clubs: allClubsReducer,

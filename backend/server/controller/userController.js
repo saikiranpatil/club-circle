@@ -198,25 +198,43 @@ exports.getUserDetails = catchAsyncError(async function (req, res, next) {
     })
 })
 
-// update user profile
-exports.updateProfile = catchAsyncError(async function (req, res, next) {
-
+// update User Profile
+exports.updateProfile = catchAsyncError(async (req, res, next) => {
     const newUserData = {
         name: req.body.name,
         email: req.body.email,
         about: req.body.about
+    };
+
+    if (req.body.avatar !== "") {
+        const user = await User.findById(req.user._id);
+
+        const imageId = user.avatar.public_id;
+
+        await cloudinary.v2.uploader.destroy(imageId);
+
+        const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+            folder: "avatars",
+            width: 150,
+            crop: "scale",
+        });
+
+        newUserData.avatar = {
+            public_id: myCloud.public_id,
+            url: myCloud.secure_url,
+        };
     }
 
-    const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
+    const user = await User.findByIdAndUpdate(req.user._id, newUserData, {
         new: true,
         runValidators: true,
         useFindAndModify: false,
     });
 
     res.status(200).json({
-        sucess: true,
-    })
-})
+        success: true,
+    });
+});
 
 // get single user
 exports.getSingleUser = exports.getSingleUser = catchAsyncError(async function (req, res, next) {

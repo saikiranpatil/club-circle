@@ -2,13 +2,14 @@ import { Tooltip } from 'react-tooltip';
 import { useState, useEffect } from 'react'
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getSingleTask, clearErrors, updateTask } from "../../redux/actions/taskActions"
+import { getSingleTask, clearErrors, updateTask } from "../../redux/actions/taskAction"
 import { display, formatDateForForm } from '../Utils/utils';
 import Loader from '../Utils/Loader/Loader';
 import Subtasks from './Subtask/Subtasks';
 import AddSubtask from './Subtask/AddSubtask';
 import UserIcon from '../../assets/UserIcon';
 import MetaData from '../Layout/MetaData';
+import profileImg from "../../images/profile.png";
 
 const Task = () => {
     const { id } = useParams();
@@ -82,7 +83,7 @@ const Task = () => {
                                 id="title"
                                 name="title"
                                 rows={3}
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-600 shadow-sm ring-1 ring-inset ring-black-900/10 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6 px-2 mt-2"
+                                className="block w-full rounded-md border-0 py-1.5 text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6 px-2 mt-2"
                                 placeholder='Task Title'
                                 value={title}
                                 onChange={handleInputChange}
@@ -137,7 +138,7 @@ const Task = () => {
                                 Assignee
                             </label>
                             <div className="mt-2 flex items-center justify-between gap-x-3">
-                                <UserIcon size={8} />
+                                <img className='h-8 w-8 rounded-full object-cover' src={profileImg} alt="" />
                                 <select
                                     name="assignee"
                                     id="assignee"

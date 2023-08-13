@@ -1,11 +1,40 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import MetaData from '../Layout/MetaData'
+import { useDispatch, useSelector } from 'react-redux';
+import { clearErrors, forgotPassword } from '../../redux/actions/userAction';
+import { display } from '../Utils/utils';
 
 const ForgotPassword = () => {
+    const dispatch = useDispatch();
+    const { error, message, loading } = useSelector(
+        (state) => state.forgotPassword
+    );
+
+    const [email, setEmail] = useState("");
+
+    const forgotPasswordSubmit = (e) => {
+        e.preventDefault();
+
+        const myForm = new FormData();
+
+        myForm.set("email", email);
+        dispatch(forgotPassword(myForm));
+    };
+
+    useEffect(() => {
+        if (error) {
+            display(error, "warning");
+            dispatch(clearErrors());
+        }
+
+        if (message) {
+            alert.success(message);
+        }
+    }, [dispatch, error, message]);
     return (
         <>
             <MetaData title={"Forgot Password"} />
-            <div className="isolate relative bg-white flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+            <div className="isolate relative flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
                 <div
                     className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]"
                     aria-hidden="true"
@@ -19,17 +48,12 @@ const ForgotPassword = () => {
                     />
                 </div>
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                    <img
-                        className="mx-auto h-10 w-auto"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                        alt="Your Company"
-                    />
                     <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                         Reset your Password
                     </h2>
                 </div>
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                    <form className="space-y-6" action="#" method="POST">
+                    <form className="space-y-6" onSubmit={forgotPasswordSubmit}>
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                                 Email address <span className="text-danger-600">*</span>
@@ -40,6 +64,8 @@ const ForgotPassword = () => {
                                     name="email"
                                     type="email"
                                     autoComplete="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                     required
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-custom ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6 pl-2"
                                 />

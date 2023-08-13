@@ -1,12 +1,10 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Loader from '../../Utils/Loader/Loader';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ClubCard from './ProfileClubCard';
 import ProfileTaskCard from './ProfileTaskCard';
 import ProfileSubtasksCard from './ProfileSubtasksCard';
 import { AiOutlinePlus } from 'react-icons/ai';
-import { Tooltip } from 'react-tooltip';
 import UserIcon from '../../../assets/UserIcon';
 import MetaData from '../../Layout/MetaData';
 
@@ -21,8 +19,8 @@ const Profile = () => {
       ) : user && (
         <>
           <MetaData title={`${user.name} - Profile`} />
-          <div className="relative h-[6rem] bg-primary-200"></div>
-          <div className="mx-auto max-w-5xl px-2 sm:px-4 lg:px-8">
+          <div className="relative h-[6rem] bg-gray-300"></div>
+          <div className="mx-auto max-w-6xl px-2 sm:px-4 lg:px-8">
             <div className="relative pb-8 px-0 sm:px-2">
               <div className="mb-6 sm:mb-3 -mt-16">
                 <div className="flex-row items-center flex-column sm:flex sm:justify-between sm:items-end">
@@ -50,7 +48,7 @@ const Profile = () => {
                   </div>
                 </div>
               </div>
-              <header className="text-center mb-6 sm:text-left pb-4 border-b-2 border-black-900/10">
+              <header className="text-center mb-6 sm:text-left pb-4 border-b-2 border-gray-300">
                 <div className="inline-flex flex-col mb-1 items-start">
                   <h1 className="text-gray-900 font-bold text-2xl">{user?.name}</h1>
                   <small className="text-gray-600">{user?.email}</small>

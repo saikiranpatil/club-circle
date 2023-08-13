@@ -4,7 +4,7 @@ import 'react-tooltip/dist/react-tooltip.css'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Navbar, Login, Profile, ForgotPassword, NotFound, Loader, Club, Register } from './components';
 import { useDispatch } from "react-redux";
-import { loadUser } from "./redux/actions/userActions";
+import { loadUser } from "./redux/actions/userAction";
 import { ToastContainer } from 'react-toastify';
 import ProtetedRoute from './components/Route/ProtectedRoute';
 import Task from './components/Task/Task';
@@ -14,7 +14,6 @@ import EditProfile from './components/User/Profile/EditProfile';
 
 function App() {
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(loadUser());
   }, [dispatch])

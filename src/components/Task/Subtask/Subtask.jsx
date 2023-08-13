@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { clearErrors, deleteSubtask, updateSubtask } from '../../../redux/actions/subtaskActions';
+import { clearErrors, deleteSubtask, updateSubtask } from '../../../redux/actions/subtaskAction';
 import { display } from '../../Utils/utils';
 import { AiFillDelete, AiOutlineLoading3Quarters } from "react-icons/ai"
-import UserIcon from '../../../assets/UserIcon';
+import profileImg from "../../../images/profile.png";
 
 const Subtask = ({ subtask, deleting, onDelete }) => {
     const { task, error, success } = useSelector((state) => state.task);
@@ -48,15 +48,11 @@ const Subtask = ({ subtask, deleting, onDelete }) => {
             display(error, "warning");
             dispatch(clearErrors());
         }
-
-        if (success) {
-            console.log("subtask updated");
-        }
-    }, [dispatch, error])
+    }, [dispatch, error, subtask])
 
 
     return (
-        <div className="grid gap-1 border border-black-900/10 rounded-lg p-2 hover:shadow-custom focus-within:shadow-custom">
+        <div className="bg-white grid gap-1 border border-gray-300 rounded-lg p-2 hover:shadow-custom focus-within:shadow-custom">
             <div className="flex justify-between items-center gap-2 border-b border-b-slate-900/10 pb-1">
                 <input
                     name="completed"
@@ -73,7 +69,7 @@ const Subtask = ({ subtask, deleting, onDelete }) => {
                     onChange={handleInputChange}
                 />
                 <div className="flex items-center gap-x-3 min-w-[150px]">
-                    <UserIcon size="8" />
+                    <img className='h-6 w-6 rounded-full object-cover' src={profileImg} alt="" />
                     <select
                         name="assignee"
                         id="assignee"
@@ -94,7 +90,7 @@ const Subtask = ({ subtask, deleting, onDelete }) => {
                 <div className="col-span-full">
                     <textarea
                         name='description'
-                        className="text-gray-500 p-2 capitalize w-full ring-1 ring-inset ring-black-900/10 rounded-sm break-all"
+                        className="text-gray-500 p-2 capitalize w-full ring-1 ring-inset ring-gray-300 rounded-sm break-all"
                         value={description}
                         onChange={handleInputChange}
                     />
@@ -103,7 +99,7 @@ const Subtask = ({ subtask, deleting, onDelete }) => {
             <div className="flex items-center gap-4">
                 <button
                     type="submit"
-                    className="rounded-md border bg-primary-500 border-black-600/50 px-1 py-1.5 text-xs text-white shadow-sm hover:bg-primary-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 disabled:opacity-50 disabled:bg-white disabled:text-gray-600"
+                    className="rounded-md border bg-primary-500 border-gray-300 px-1 py-1.5 text-xs text-white shadow-sm hover:bg-primary-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 disabled:opacity-50 disabled:bg-white disabled:text-gray-600"
                     disabled={updateButtonDisabled}
                     onClick={handleUpdateSubtask}
                 >

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllSubtasks, clearErrors, deleteSubtask } from '../../../redux/actions/subtaskActions';
+import { getAllSubtasks, clearErrors, deleteSubtask } from '../../../redux/actions/subtaskAction';
 import { display } from "../../Utils/utils"
 import Subtask from './Subtask';
 import { SUBTASK_DELETE_RESET } from '../../../redux/constants/subtaskConstants';
@@ -9,7 +9,7 @@ const SubTasks = () => {
     const dispatch = useDispatch();
     const { task } = useSelector((state) => state.task);
     const { subtasks, error } = useSelector((state) => state.subtasks);
-    const { isDeleted } = useSelector((state) => state.subtask);
+    const { isDeleted, success } = useSelector((state) => state.subtask);
 
     const handleDelete = (subtaskId) => {
         dispatch(deleteSubtask(subtaskId));
@@ -29,7 +29,7 @@ const SubTasks = () => {
             display("Subtask Deleted", "info");
             dispatch({ type: SUBTASK_DELETE_RESET });
         }
-    }, [task, error, dispatch, isDeleted]);
+    }, [task, error, dispatch, isDeleted, success]);
 
     return (
         <>

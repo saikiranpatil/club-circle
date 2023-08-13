@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getSingleClub, clearErrors, deleteClub } from "../../redux/actions/clubActions"
+import { getSingleClub, clearErrors, deleteClub } from "../../redux/actions/clubAction"
 import { display } from '../Utils/utils';
 import Loader from '../Utils/Loader/Loader';
 import { IoMdAdd } from "react-icons/io"
@@ -9,8 +9,8 @@ import ClubTask from './ClubTask';
 import { Tooltip } from 'react-tooltip';
 import SetRole from './SetRole';
 import { AiFillDelete } from 'react-icons/ai';
-import { loadUser } from '../../redux/actions/userActions';
-import { deleteTask } from '../../redux/actions/taskActions';
+import { loadUser } from '../../redux/actions/userAction';
+import { deleteTask } from '../../redux/actions/taskAction';
 import { TASK_DELETE_RESET } from '../../redux/constants/taskConstants';
 import MetaData from '../Layout/MetaData';
 const taskTitles = [
@@ -101,8 +101,8 @@ const Club = () => {
                             </div>
                             <ul role="list" className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                 {club && club?.members?.map((member) => (
-                                    <li key={member._id} className="flex items-center justify-between gap-x-4 p-2 bg-white rounded-sm ring-[0.5px] ring-inset ring-gray-300 shadow-custom">
-                                        <img className="h-8 w-8 rounded-full" src={member?.avatar?.url} alt="" />
+                                    <li key={member._id} className="flex items-center justify-between p-2 bg-white rounded-sm ring-[0.5px] ring-inset ring-gray-300 shadow-custom">
+                                        <img className="h-14 w-14 rounded-full object-cover border border-gray-300" src={member?.avatar?.url} alt="" />
                                         <h3 className="text-sm font-medium leading-6 text-gray-500 break-all capitalize">{member.name}</h3>
                                         <span className="text-sm text-gray-600 font-normal leading-6 break-all capitalize">
                                             {member.role == "cadmin" ? "Club Admin" : "Member"}

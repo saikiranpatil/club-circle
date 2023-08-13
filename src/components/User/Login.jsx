@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearErrors, login } from "../../redux/actions/userActions";
+import { clearErrors, loadUser, login } from "../../redux/actions/userAction";
 import { useNavigate, Link } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
 import { display } from "../Utils/utils";
-import { LOGIN_RESET } from "../../redux/constants/userConstants";
 import MetaData from "../Layout/MetaData";
 
 const Login = () => {
@@ -28,9 +27,7 @@ const Login = () => {
             dispatch(clearErrors());
         }
         if (isAuthenticated) {
-            display("Logged In", "info")
             navigate(`/`);
-            dispatch({ type: LOGIN_RESET });
         }
     }, [dispatch, error, navigate, isAuthenticated]);
 
@@ -51,11 +48,6 @@ const Login = () => {
                     />
                 </div>
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                    <img
-                        className="mx-auto h-10 w-auto"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                        alt="Your Company"
-                    />
                     <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                         Sign in to your account
                     </h2>

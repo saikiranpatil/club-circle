@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../Utils/Loader/Loader';
-import { getAllUsers } from '../../redux/actions/userActions';
-import { clearErrors, setClubRole } from '../../redux/actions/clubActions';
+import { getAllUsers } from '../../redux/actions/userAction';
+import { clearErrors, setClubRole } from '../../redux/actions/clubAction';
 import { display } from '../Utils/utils';
 import { CLUB_SET_ROLE_RESET } from '../../redux/constants/clubConstants';
 
@@ -65,16 +65,16 @@ const SetRole = ({ setClubUpdated }) => {
             {loading ? (
                 <Loader />
             ) : (
-                <ul className='custom-shadow border border-black-900/20 rounded-lg p-2 max-h-[15rem] overflow-y-auto'>
+                <ul className='custom-shadow border border-gray-300 rounded-lg p-2 max-h-[15rem] overflow-y-auto'>
                     {usersDetails && usersDetails.length > 0 ? (
                         usersDetails.map((user) => user && (
                             <ul
                                 key={"user" + user._id}
-                                className='grid grid-cols-5 gap-2 justify-center p-1 m-1 border-b border-black-900/20'
+                                className='flex justify-between gap-6 items-center p-1 m-1 border-b border-gray-300'
                             >
                                 <li>
                                     <img
-                                        className='h-6 w-6 rounded-full'
+                                        className='h-8 w-8 rounded-full object-cover border border-gray-300'
                                         src={user.avatar.url}
                                         alt=''
                                     />

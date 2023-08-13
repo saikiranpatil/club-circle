@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import MetaData from '../../Layout/MetaData';
-import { Link } from 'react-router-dom';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
-import UserIcon from '../../../assets/UserIcon';
-import { clearErrors, updateUser } from '../../../redux/actions/userActions';
+import { clearErrors, loadUser, updateProfile } from '../../../redux/actions/userAction';
 import { display } from '../../Utils/utils';
+import { UPDATE_PROFILE_RESET } from '../../../redux/constants/userConstants';
+import { useNavigate } from 'react-router-dom';
 
 const EditProfile = () => {
     const dispatch = useDispatch();
-    const { user, loading, error, success } = useSelector((state) => state.user);
+    const { user } = useSelector((state) => state.user);
+    const { loading, isUpdated, error } = useSelector((state) => state.profile);
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         name: "",
@@ -40,13 +42,14 @@ const EditProfile = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const formData = new FormData();
-        formData.set("name", name);
-        formData.set("email", email);
-        formData.set("about", about);
-        formData.set("avatar", avatar);
+        const myForm = new FormData();
 
-        dispatch(updateUser(formData));
+        myForm.set("name", name);
+        myForm.set("email", email);
+        myForm.set("about", about);
+        myForm.set("avatar", avatar);
+
+        dispatch(updateProfile(myForm));
     }
 
     useEffect(() => {
@@ -68,10 +71,13 @@ const EditProfile = () => {
             dispatch(clearErrors());
         }
 
-        if (success) {
-            display("Profile Edited", "info");
+        if (isUpdated) {
+            display("Profile Updated Sucessfully", "info");
+            dispatch({ type: UPDATE_PROFILE_RESET });
+            dispatch(loadUser());
+            navigate("/");
         }
-    }, [user, dispatch, error, success])
+    }, [user, dispatch, error, isUpdated, navigate])
 
 
     return (

@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+textarea,
+input {
+  outline: none;
+}
+
+body {
+  /* background: rgba(239, 238, 259, 0.3); */
+}

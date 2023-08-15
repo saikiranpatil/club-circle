@@ -1,17 +1,12 @@
-import { useSelector } from 'react-redux';
 import Loader from '../../Utils/Loader/Loader';
 import { Link } from 'react-router-dom';
 import ClubCard from './ProfileClubCard';
 import ProfileTaskCard from './ProfileTaskCard';
 import ProfileSubtasksCard from './ProfileSubtasksCard';
 import { AiOutlinePlus } from 'react-icons/ai';
-import UserIcon from '../../../assets/UserIcon';
 import MetaData from '../../Layout/MetaData';
 
-const Profile = () => {
-  const { user, loading } = useSelector((state) => state.user);
-
-
+const Profile = ({ user, loading }) => {
   return (
     <>
       {loading ? (
@@ -19,24 +14,18 @@ const Profile = () => {
       ) : user && (
         <>
           <MetaData title={`${user.name} - Profile`} />
-          <div className="relative h-[6rem] bg-gray-300"></div>
+          <div className="relative h-[6rem] bg-white"></div>
           <div className="mx-auto max-w-6xl px-2 sm:px-4 lg:px-8">
             <div className="relative pb-8 px-0 sm:px-2">
               <div className="mb-6 sm:mb-3 -mt-16">
                 <div className="flex-row items-center flex-column sm:flex sm:justify-between sm:items-end">
                   <div className="inline-flex mb-1rem sm:mb-0 -mt-1 -ml-1">
-                    <div className="rounded-full border-4 border-white">
-                      {
-                        user.avatar?.url ?
-                          <img
-                            className="rounded-full border-4 border-white h-[128px] w-[128px] object-cover"
-                            src={user?.avatar?.url}
-                            alt="Avatar"
-                          /> :
-                          <div className="bg-white rounded-full">
-                            <UserIcon size={"[128px]"} />
-                          </div>
-                      }
+                    <div className="rounded-full border border-gray-300">
+                      <img
+                        className="rounded-full border-8 border-white h-[150px] w-[150px] object-cover"
+                        src={user?.avatar?.url || ""}
+                        alt="Avatar"
+                      />
                     </div>
                   </div>
                   <div className="flex gap-4 sm:mb-2">

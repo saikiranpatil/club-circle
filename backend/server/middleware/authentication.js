@@ -23,8 +23,8 @@ exports.isAuthenticatedUser = catchAsyncError(async (req, res, next) => {
     const clubs = await Club.find(query);
 
     const roles = {};
-    clubs.map((club)=>{
-        roles[club._id]=club.members.get(req.user._id);
+    clubs.map((club) => {
+        roles[club._id] = club.members.get(req.user._id);
     })
 
     req.user = {
@@ -37,9 +37,26 @@ exports.isAuthenticatedUser = catchAsyncError(async (req, res, next) => {
 
 exports.authorizeRoles = (...roles) => {
     return (req, res, next) => {
-        if (!roles.includes(req.user.role)) {
+        const clubRole = req.user.roles[req.params.clubId];
+        if (!clubRole || !roles.includes(clubRole)) {
             next(new ErrorHandler(`Role:${req.user.role} is not authorized to acess this resource`, 403));
         }
+        next();
+    }
+}
+
+exports.extractClubId = (fromId) => {
+
+    return (req, res, next) => {
+        switch (fromId) {
+            case "club":
+                req.params.clubId = req.params.id;
+                break;
+
+            default:
+                break;
+        }
+
         next();
     }
 }

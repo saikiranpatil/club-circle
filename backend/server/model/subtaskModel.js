@@ -14,6 +14,11 @@ const subTaskSchema = new mongoose.Schema({
         ref: "Task",
         default: null,
     },
+    club: {
+        type: mongoose.Schema.ObjectId,
+        ref: "Club",
+        default: null,
+    },
     assignee: {
         type: mongoose.Schema.ObjectId,
         ref: "User",

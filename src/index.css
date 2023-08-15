@@ -13,7 +13,7 @@ input {
 }
 
 body {
-	background: rgba(239, 238, 259, 0.5);
+	background: #ededed;
 }
 
 *::-webkit-scrollbar-track {
@@ -31,4 +31,9 @@ body {
 	border-radius: 10px;
 	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .1);
 	background-color: #6b63f1;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+	accent-color: #6b63f1;
 }

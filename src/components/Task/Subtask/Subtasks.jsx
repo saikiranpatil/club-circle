@@ -38,7 +38,7 @@ const SubTasks = () => {
             </legend>
             {
                 subtasks?.length === 0 ? (
-                    <p className="text-gray-400 text-sm">
+                    <p className="text-gray-500 text-sm">
                         No Subtasks
                     </p>
                 ) : <div className="mt-2 space-y-6 sm:max-h-[480px] sm:overflow-y-auto pr-0 sm:pr-4">

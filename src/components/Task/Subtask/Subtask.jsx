@@ -57,7 +57,7 @@ const Subtask = ({ subtask, deleting, onDelete }) => {
                 <input
                     name="completed"
                     type="checkbox"
-                    className="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-600"
+                    className="h-8 w-8 rounded border-gray-300 text-primary-600 focus:ring-primary-600"
                     checked={completed}
                     onChange={handleInputChange}
                 />

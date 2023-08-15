@@ -4,8 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { clearErrors, register } from '../../redux/actions/userAction';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { display } from '../Utils/utils';
-import UserIcon from "../../assets/UserIcon";
 import MetaData from '../Layout/MetaData';
+import userImg from "../../images/profile.png"
 
 const Register = () => {
     const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const Register = () => {
     const { name, email, password, about } = formData;
     const [avatar, setAvatar] = useState("");
 
-    const { loading, success, error } = useSelector((state) => state.user);
+    const { loading, isAuthenticated, error } = useSelector((state) => state.user);
 
     const handleInputChange = (e) => {
         if (e.target.name === "avatar") {
@@ -40,7 +40,15 @@ const Register = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(register(name, email, password, avatar, about));
+
+        const myForm = new FormData();
+        myForm.set("name", name);
+        myForm.set("email", email);
+        myForm.set("password", password);
+        myForm.set("about", about);
+        myForm.set("avatar", avatar);
+
+        dispatch(register(myForm));
     }
 
     useEffect(() => {
@@ -49,11 +57,10 @@ const Register = () => {
             dispatch(clearErrors());
         }
 
-        if (success) {
-            display("Account created Sucessfully", "success");
+        if (isAuthenticated) {
             navigate("/");
         }
-    }, [dispatch, success, error, navigate])
+    }, [dispatch, error, isAuthenticated, navigate])
 
 
     return (
@@ -92,7 +99,7 @@ const Register = () => {
                                     value={name}
                                     onChange={handleInputChange}
                                     required
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-custom ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6 pl-2"
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-custom ring-1 ring-inset ring-gray-300 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6 pl-2"
                                 />
                             </div>
                         </div>
@@ -108,7 +115,7 @@ const Register = () => {
                                     value={email}
                                     onChange={handleInputChange}
                                     required
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-custom ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6 pl-2"
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-custom ring-1 ring-inset ring-gray-300 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6 pl-2"
                                 />
                             </div>
                         </div>
@@ -119,10 +126,7 @@ const Register = () => {
                             >
                                 Photo <span className="text-danger-600">*</span>
                             </label>
-                            <div className="mt-2 flex items-center justify-between gap-x-3">
-                                {
-                                    avatar ? <img className='h-10 w-10 rounded-full aspect-square object-cover' src={avatar} alt="" /> : <UserIcon size={10} />
-                                }
+                            <div className="mt-2 flex items-center justify-between gap-x-3"><img className='h-10 w-10 rounded-full aspect-square object-cover' src={avatar || userImg} alt="" />
                                 <input
                                     type="file"
                                     name="avatar"
@@ -148,7 +152,7 @@ const Register = () => {
                                     value={password}
                                     required
                                     onChange={handleInputChange}
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-custom ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6 pl-2"
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-custom ring-1 ring-inset ring-gray-300 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6 pl-2"
                                 />
                             </div>
                         </div>
@@ -168,7 +172,7 @@ const Register = () => {
                                     value={about}
                                     required
                                     onChange={handleInputChange}
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-custom ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6 pl-2"
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-custom ring-1 ring-inset ring-gray-300 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6 pl-2"
                                 />
                             </div>
                         </div>

@@ -101,7 +101,7 @@ const Club = () => {
                             </div>
                             <ul role="list" className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                 {club && club?.members?.map((member) => (
-                                    <li key={member._id} className="flex items-center justify-between p-2 bg-white rounded-sm ring-[0.5px] ring-inset ring-gray-300 shadow-custom">
+                                    <li key={member._id} className="flex items-center justify-between p-2 bg-white rounded-[10px] ring-[0.5px] ring-inset ring-gray-300 shadow-custom">
                                         <img className="h-14 w-14 rounded-full object-cover border border-gray-300" src={member?.avatar?.url} alt="" />
                                         <h3 className="text-sm font-medium leading-6 text-gray-500 break-all capitalize">{member.name}</h3>
                                         <span className="text-sm text-gray-600 font-normal leading-6 break-all capitalize">
@@ -128,7 +128,7 @@ const Club = () => {
                                             <h2 className="text-slate-800 font-medium text-ellipsis grow overflow-hidden whitespace-nowrap mb-4">{sectionTitle.text}</h2>
                                             <ul role="list" className="flex flex-col gap-4">
                                                 {tasksInSection?.length === 0 ? (
-                                                    <li className='text-gray-400 text-sm'>No Tasks Present Here</li>
+                                                    <li className='text-gray-500 text-sm'>No Tasks Present Here</li>
                                                 ) : (
                                                     tasksInSection?.map((task) => (
                                                         <ClubTask key={task._id} task={task} handleTaskDelete={handleTaskDelete} />

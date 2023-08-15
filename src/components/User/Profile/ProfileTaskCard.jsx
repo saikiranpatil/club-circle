@@ -6,7 +6,7 @@ const ProfileTaskCard = ({ task }) => {
     return (
         <li
             key={task._id}
-            className={`bg-white rounded-sm ring-[0.5px] ring-inset ring-gray-300 shadow-custom p-2 mb-4 flex flex-col justify-between ${task.status === "Completed" ? "opacity-50" : ""}`}
+            className={`bg-white rounded-[10px] ring-[0.5px] ring-inset ring-gray-300 shadow-custom p-2 mb-4 flex flex-col justify-between ${task.status === "Completed" ? "opacity-50" : ""}`}
         >
             <div className="flex flex-col justify-between mb-2">
                 <div className="flex justify-between">

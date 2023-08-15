@@ -3,7 +3,7 @@ import './App.css'
 import 'react-tooltip/dist/react-tooltip.css'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Navbar, Login, Profile, ForgotPassword, NotFound, Loader, Club, Register } from './components';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loadUser } from "./redux/actions/userAction";
 import { ToastContainer } from 'react-toastify';
 import ProtetedRoute from './components/Route/ProtectedRoute';
@@ -13,10 +13,15 @@ import AddClub from './components/Club/AddClub';
 import EditProfile from './components/User/Profile/EditProfile';
 
 function App() {
+  const { loading, isAuthenticated, user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadUser());
   }, [dispatch])
+
+  useEffect(() => {
+  }, [isAuthenticated])
+
 
   return (
     <BrowserRouter>
@@ -27,7 +32,7 @@ function App() {
           <Route path='/register' exact element={<Register />} />
           <Route path='/forgot' exact element={<ForgotPassword />} />
           <Route element={<ProtetedRoute />}>
-            <Route path='/' exact element={<Profile />} />
+            <Route path='/' exact element={<Profile user={user} loading={loading} />} />
             <Route path='/profile/edit' exact element={<EditProfile />} />
             <Route path='/club/create' exact element={<AddClub />} />
             <Route path='/club/:id' exact element={<Club />} />

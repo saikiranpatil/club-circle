@@ -9,7 +9,6 @@ const {
 } = require("../controller/taskController.js");
 const {
     isAuthenticatedUser,
-    authorizeRoles,
 } = require("../middleware/authentication.js");
 
 router.route("/tasks/:id").get(isAuthenticatedUser, getTasks);

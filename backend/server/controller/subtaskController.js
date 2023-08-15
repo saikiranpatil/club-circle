@@ -16,6 +16,7 @@ exports.createSubtask = catchAsyncError(async (req, res, next) => {
     title,
     description,
     deadline,
+    club: task.club,
     createdBy: req.user._id,
     task: task._id
   };

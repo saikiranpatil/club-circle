@@ -34,7 +34,7 @@ exports.getClub = catchAsyncError(async (req, res, next) => {
 
     const tasksWithSubtasks = await Promise.all(club.tasks.map(async (task) => {
         const taskDetails = await Task.findById(task);
-        
+
         const subtaskPromises = taskDetails.subtasks.map(async (subtaskId) => {
             const subtask = await Subtask.findById(subtaskId);
             return subtask;

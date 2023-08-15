@@ -65,14 +65,14 @@ const SetRole = ({ setClubUpdated }) => {
             {loading ? (
                 <Loader />
             ) : (
-                <ul className='custom-shadow border border-gray-300 rounded-lg p-2 max-h-[15rem] overflow-y-auto'>
+                <ul className='custom-shadow border border-gray-300 rounded-lg p-2 max-h-[15rem] max-w-[80vw] overflow-auto'>
                     {usersDetails && usersDetails.length > 0 ? (
                         usersDetails.map((user) => user && (
                             <ul
                                 key={"user" + user._id}
-                                className='flex justify-between gap-6 items-center p-1 m-1 border-b border-gray-300'
+                                className='flex flex-wrap justify-between gap-0 sm:gap-6 items-start sm:items-center p-1 m-1 border-b border-gray-300'
                             >
-                                <li>
+                                <li className='h-8 w-8'>
                                     <img
                                         className='h-8 w-8 rounded-full object-cover border border-gray-300'
                                         src={user.avatar.url}
@@ -82,7 +82,7 @@ const SetRole = ({ setClubUpdated }) => {
                                 <li className='text-slate-600 font-bold text-sm break-all'>
                                     {user.name}
                                 </li>
-                                <li className='flex justify-center gap-1 col-span-3'>
+                                <li className='flex flex-wrap justify-center items-center gap-1 col-span-3'>
                                     <div className='flex justify-center gap-1'>
                                         <input
                                             type='radio'

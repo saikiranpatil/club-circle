@@ -28,6 +28,7 @@ const Login = () => {
         }
         if (isAuthenticated) {
             navigate(`/`);
+            dispatch(loadUser());
         }
     }, [dispatch, error, navigate, isAuthenticated]);
 

@@ -5,8 +5,11 @@ import ProfileTaskCard from './ProfileTaskCard';
 import ProfileSubtasksCard from './ProfileSubtasksCard';
 import { AiOutlinePlus } from 'react-icons/ai';
 import MetaData from '../../Layout/MetaData';
+import { useSelector } from 'react-redux';
 
-const Profile = ({ user, loading }) => {
+const Profile = () => {
+  const { user, loading } = useSelector((state) => state.user);
+
   return (
     <>
       {loading ? (

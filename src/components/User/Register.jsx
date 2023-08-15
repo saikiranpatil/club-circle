@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
-import { clearErrors, register } from '../../redux/actions/userAction';
+import { clearErrors, loadUser, register } from '../../redux/actions/userAction';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { display } from '../Utils/utils';
 import MetaData from '../Layout/MetaData';
@@ -59,6 +59,7 @@ const Register = () => {
 
         if (isAuthenticated) {
             navigate("/");
+            dispatch(loadUser());
         }
     }, [dispatch, error, isAuthenticated, navigate])
 

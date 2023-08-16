@@ -33,9 +33,11 @@ const Club = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { club, loading, isDeleted } = useSelector((state) => state.club);
-    const [clubUpdated, setClubUpdated] = useState(false);
+    const { user } = useSelector((state) => state.user);
+    const { club, loading, isDeleted, error } = useSelector((state) => state.club);
     const { isDeleted: isTaskDeleted } = useSelector((state) => state.task);
+
+    const [clubUpdated, setClubUpdated] = useState(false);
 
 
     const handleDelete = () => {
@@ -61,6 +63,14 @@ const Club = () => {
         }
     }, [id, dispatch, clubUpdated, isDeleted, navigate, isTaskDeleted]);
 
+    useEffect(() => {
+        if (error) {
+            display(error, "warning");
+            navigate("/");
+            dispatch(clearErrors());
+        }
+    }, [error, dispatch, navigate])
+    
     return loading ? (
         <Loader />
     ) : club && (

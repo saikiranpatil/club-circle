@@ -16,6 +16,7 @@ import {
     CLUB_DELETE_REQUEST,
     CLUB_DELETE_SUCCESS,
     CLUB_DELETE_FAIL,
+    CLEAR_ERRORS
 } from "../constants/clubConstants";
 
 export const allClubsReducer = (state = { clubs: [] }, action) => {
@@ -36,6 +37,12 @@ export const allClubsReducer = (state = { clubs: [] }, action) => {
             return {
                 loading: false,
                 error: action.payload,
+            };
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null,
             };
 
         default:
@@ -82,6 +89,12 @@ export const singleClubReducer = (state = { club: [] }, action) => {
                 isDeleted: action.payload,
             };
 
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null,
+            };
+
         default:
             return state;
     }
@@ -112,6 +125,12 @@ export const setRoleReducer = (state = { club: {} }, action) => {
             return {
                 loading: false,
                 error: action.payload,
+            };
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null,
             };
 
         default:

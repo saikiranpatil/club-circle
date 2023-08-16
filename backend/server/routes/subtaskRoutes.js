@@ -7,10 +7,18 @@ const {
     deleteSubtask,
     getSubtasks,
 } = require('../controller/subTaskController');
-const { isAuthenticatedUser } = require('../middleware/authentication');
+const {
+    isAuthenticatedUser,
+    extractClubId,
+    authorizeRoles,
+} = require('../middleware/authentication');
 
 router.route('/subtasks/:id').get(isAuthenticatedUser, getSubtasks);
-router.route('/subtask/create/:id').post(isAuthenticatedUser, createSubtask);
-router.route('/subtask/:id').get(isAuthenticatedUser, getSubtask).put(isAuthenticatedUser, updateSubtask).delete(isAuthenticatedUser, deleteSubtask);
+router.route('/subtask/create/:id')
+    .post(isAuthenticatedUser, extractClubId("task"), authorizeRoles("member", "cadmin"), createSubtask);
+router.route('/subtask/:id')
+    .get(isAuthenticatedUser, extractClubId("subtask"), authorizeRoles("member", "cadmin"), getSubtask)
+    .put(isAuthenticatedUser, extractClubId("subtask"), updateSubtask)
+    .delete(isAuthenticatedUser, extractClubId("subtask"), authorizeRoles("cadmin"), deleteSubtask);
 
 module.exports = router;

@@ -7,11 +7,7 @@ const Subtask = require('../model/subtaskModel');
 
 // create a task
 exports.createTask = catchAsyncError(async (req, res, next) => {
-    const club = await Club.findById(req.params.id);
-
-    if (!club) {
-        return next(new ErrorHandler(`Club not found with id ${req.params.id}`, 404));
-    }
+    const club = req.club;
 
     const { title, description, deadline } = req.body;
 
@@ -34,20 +30,10 @@ exports.createTask = catchAsyncError(async (req, res, next) => {
 
 // get single task
 exports.getTask = catchAsyncError(async (req, res, next) => {
-    const task = await Task.findById(req.params.id);
-
-    if (!task) {
-        return next(new ErrorHandler(`Task not found with id ${req.params.id}`, 404));
-    }
-
-    const club = await Club.findById(task.club);
-
-    if (!club) {
-        return next(new ErrorHandler(`Club Not found`, 404));
-    }
+    const task = req.task;
+    const club = req.club;
 
     const assignee = await User.findById(task.assignee);
-
     const clubMembers = await Promise.all(
         Array.from(club.members).map(async ([memberId, role]) => {
             const user = await User.findById(memberId);
@@ -69,12 +55,6 @@ exports.getTask = catchAsyncError(async (req, res, next) => {
 
 // update Task
 exports.updateTask = catchAsyncError(async (req, res, next) => {
-    const task = await Task.findById(req.params.id);
-
-    if (!task) {
-        return next(new ErrorHandler(`Task not found with id ${req.params.id}`, 404));
-    }
-
     const newTaskData = {
         title: req.body.title,
         description: req.body.description,
@@ -96,12 +76,8 @@ exports.updateTask = catchAsyncError(async (req, res, next) => {
 })
 
 exports.deleteTask = catchAsyncError(async (req, res, next) => {
-    const task = await Task.findById(req.params.id);
-    const club = await Club.findById(task.club);
-
-    if (!task) {
-        return next(new ErrorHandler(`Task not found with id ${req.params.id}`, 404));
-    }
+    const task = req.task;
+    const club = req.club;
 
     const upadtedClubTasks = club.tasks.filter(taskId => !taskId.equals(task._id));
     club.tasks = upadtedClubTasks;
@@ -118,10 +94,7 @@ exports.deleteTask = catchAsyncError(async (req, res, next) => {
 
 // get tasks
 exports.getTasks = catchAsyncError(async (req, res, next) => {
-    const club = await Club.findById(req.params.id);
-    if (!club) {
-        return next(new ErrorHandler(`Club not found with id ${req.params.id}`, 404));
-    }
+    const club = req.club;
 
     const tasks = await Task.find({ club: club._id });
 

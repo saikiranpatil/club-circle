@@ -5,8 +5,10 @@ import { display } from '../../Utils/utils';
 import { AiFillDelete, AiOutlineLoading3Quarters } from "react-icons/ai"
 import profileImg from "../../../images/profile.png";
 
-const Subtask = ({ subtask, deleting, onDelete }) => {
-    const { task, error, success } = useSelector((state) => state.task);
+const Subtask = ({ subtask, deleting, onDelete, role }) => {
+    const { task } = useSelector((state) => state.task);
+    const { user } = useSelector((state) => state.user);
+    const { error } = useSelector((state) => state.subtask);
     const dispatch = useDispatch();
 
     const [formData, setFormData] = useState({
@@ -49,10 +51,8 @@ const Subtask = ({ subtask, deleting, onDelete }) => {
             dispatch(clearErrors());
         }
     }, [dispatch, error, subtask])
-
-
     return (
-        <div className="bg-white grid gap-1 border border-gray-300 rounded-lg p-2 hover:shadow-custom focus-within:shadow-custom">
+        <fieldset disabled={assignee !== user._id && role != "cadmin"} className="bg-white grid gap-1 border border-gray-300 rounded-lg p-2 hover:shadow-custom focus-within:shadow-custom">
             <div className="flex justify-between items-center gap-2 border-b border-b-slate-900/10 pb-1">
                 <input
                     name="completed"
@@ -76,6 +76,7 @@ const Subtask = ({ subtask, deleting, onDelete }) => {
                         className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:max-w-xs sm:text-xs sm:leading-6 px-1 focus:ring-2 focus:ring-primary-600/10"
                         onChange={handleInputChange}
                         value={assignee ? assignee : ""}
+                        disabled={role !== "cadmin"}
                     >
                         <option value="">Select an assignee</option>
                         {task.clubMembers?.map((member) => (
@@ -97,27 +98,33 @@ const Subtask = ({ subtask, deleting, onDelete }) => {
                 </div>
             </div>
             <div className="flex items-center gap-4">
-                <button
-                    type="submit"
-                    className="rounded-md border bg-primary-500 border-gray-300 px-1 py-1.5 text-xs text-white shadow-sm hover:bg-primary-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 disabled:opacity-50 disabled:bg-white disabled:text-gray-600"
-                    disabled={updateButtonDisabled}
-                    onClick={handleUpdateSubtask}
-                >
-                    Update
-                </button>
-                <button className='rounded-sm px-1 py-1.5' onClick={onDelete}>
-                    {
-                        deleting ?
-                            <div className="animate-spin">
-                                <AiOutlineLoading3Quarters className='fill-black-600/50 hover:fill-black-800' />
-                            </div>
-                            :
-                            <AiFillDelete className='fill-black-600/50 hover:fill-black-800' />
-                    }
+                {
+                    (role === "cadmin" || assignee === user._id) &&
+                    <button
+                        type="submit"
+                        className="rounded-md border bg-primary-500 border-gray-300 px-1 py-1.5 text-xs text-white shadow-sm hover:bg-primary-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 disabled:opacity-50 disabled:bg-white disabled:text-gray-600"
+                        disabled={updateButtonDisabled}
+                        onClick={handleUpdateSubtask}
+                    >
+                        Update
+                    </button>
+                }
+                {
+                    role === "cadmin" &&
+                    <button className='rounded-sm px-1 py-1.5' onClick={onDelete}>
+                        {
+                            deleting ?
+                                <div className="animate-spin">
+                                    <AiOutlineLoading3Quarters className='fill-black-600/50 hover:fill-black-800' />
+                                </div>
+                                :
+                                <AiFillDelete className='fill-black-600/50 hover:fill-black-800' />
+                        }
 
-                </button>
+                    </button>
+                }
             </div>
-        </div>
+        </fieldset>
     )
 }
 

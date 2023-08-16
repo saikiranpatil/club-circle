@@ -5,18 +5,13 @@ const ErrorHandler = require('../utils/errorHandler');
 
 // create a subtask
 exports.createSubtask = catchAsyncError(async (req, res, next) => {
-  const task = await Task.findById(req.params.id);
-
-  if (!task) {
-    return next(new ErrorHandler(`Task not found with id ${req.params.id}`, 404));
-  }
+  const task = req.task;
 
   const { title, description, deadline, assignee } = req.body;
   let subtaskData = {
     title,
     description,
     deadline,
-    club: task.club,
     createdBy: req.user._id,
     task: task._id
   };
@@ -38,11 +33,7 @@ exports.createSubtask = catchAsyncError(async (req, res, next) => {
 
 // get single subtask
 exports.getSubtask = catchAsyncError(async (req, res, next) => {
-  const subtask = await Subtask.findById(req.params.id);
-
-  if (!subtask) {
-    return next(new ErrorHandler(`Subtask not found with id ${req.params.id}`, 404));
-  }
+  const subtask = req.subtask;
 
   res.status(200).json({
     success: true,
@@ -52,16 +43,8 @@ exports.getSubtask = catchAsyncError(async (req, res, next) => {
 
 // update subtask
 exports.updateSubtask = catchAsyncError(async (req, res, next) => {
-  const subtask = await Subtask.findById(req.params.id);
-
-  if (!subtask) {
-    return next(new ErrorHandler(`Subtask not found with id ${req.params.id}`, 404));
-  }
-
-  const task = await Task.findById(subtask.task);
-
-  if (!task) {
-    return next(new ErrorHandler(`task not found with subTask id ${req.params.id}`, 404));
+  if (req.user.roles[req.club._id] !== "cadmin" && !req.subtask.assignee.equals(req.user._id)) {
+    return next(new ErrorHandler("You are not accesed to edit this subtask", 403));
   }
 
   const newSubtaskData = {
@@ -90,17 +73,8 @@ exports.updateSubtask = catchAsyncError(async (req, res, next) => {
 });
 
 exports.deleteSubtask = catchAsyncError(async (req, res, next) => {
-  const subtask = await Subtask.findById(req.params.id);
-
-  if (!subtask) {
-    return next(new ErrorHandler(`Subtask not found with id ${req.params.id}`, 404));
-  }
-
-  const task = await Task.findById(subtask.task);
-
-  if (!task) {
-    return next(new ErrorHandler(`task not found with subTask id ${req.params.id}`, 404));
-  }
+  const subtask = req.subtask;
+  const task = req.task;
 
   const updatedSubtasks = task.subtasks.filter(subtaskId => !subtaskId.equals(subtask._id));
   task.subtasks = updatedSubtasks;

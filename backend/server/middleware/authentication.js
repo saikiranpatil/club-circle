@@ -37,29 +37,63 @@ exports.isAuthenticatedUser = catchAsyncError(async (req, res, next) => {
 
 exports.authorizeRoles = (...roles) => {
     return (req, res, next) => {
-        const clubRole = req.user.roles[req.params.clubId];
+        const clubRole = req.user.roles[req.clubId];
         if (!clubRole || !roles.includes(clubRole)) {
-            next(new ErrorHandler(`Role:${req.user.role} is not authorized to acess this resource`, 403));
+            next(new ErrorHandler(`Role:${clubRole || "Non Club Member"} is not authorized to acess this resource`, 403));
         }
         next();
     }
 }
 
 exports.extractClubId = (fromId) => {
+    return catchAsyncError(
+        async (req, res, next) => {
+            switch (fromId) {
+                case "club":
+                    req.clubId = req.params.id;
 
-    return (req, res, next) => {
-        switch (fromId) {
-            case "club":
-                req.params.clubId = req.params.id;
-                break;
+                    break;
 
-            default:
-                break;
+                case "task":
+                    req.taskId = req.params.id;
+                    break;
+
+                case "subtask":
+                    const subtask = await Subtask.findById(req.params.id);
+
+                    if (!subtask) {
+                        return next(new ErrorHandler("Subtask not found eith given Id", 404));
+                    }
+
+                    req.subtask = subtask;
+                    req.taskId = subtask.task;
+                    break;
+
+                default:
+                    break;
+            }
+
+            if (req.taskId) {
+                const task = await Task.findById(req.taskId);
+
+                if (!task) {
+                    return next(new ErrorHandler("Task Not present with given id", 404));
+                }
+
+                req.task = task;
+                req.clubId = task.club;
+            }
+
+            const club = await Club.findById(req.clubId);
+            if (!club) {
+                return next(new ErrorHandler("Club Not present with given id", 404));
+            }
+            req.club = club;
+
+            next();
         }
-
-        next();
-    }
-}
+    )
+};
 
 exports.isAdmin = catchAsyncError(async (req, res, next) => {
     if (!req.user.isAdmin) {

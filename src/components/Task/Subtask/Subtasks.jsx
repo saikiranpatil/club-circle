@@ -5,7 +5,7 @@ import { display } from "../../Utils/utils"
 import Subtask from './Subtask';
 import { SUBTASK_DELETE_RESET } from '../../../redux/constants/subtaskConstants';
 
-const SubTasks = () => {
+const SubTasks = ({ role }) => {
     const dispatch = useDispatch();
     const { task } = useSelector((state) => state.task);
     const { subtasks, error } = useSelector((state) => state.subtasks);
@@ -46,6 +46,7 @@ const SubTasks = () => {
                         <Subtask
                             key={subtask._id}
                             subtask={subtask}
+                            role={role}
                             deleting={false}
                             onDelete={() => handleDelete(subtask._id)}
                         />

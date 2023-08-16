@@ -16,6 +16,7 @@ import {
     TASK_DELETE_SUCCESS,
     TASK_DELETE_RESET,
     TASK_DELETE_FAIL,
+    CLEAR_ERRORS
 } from "../constants/taskConstants";
 
 export const allTasksReducer = (state = { tasks: [] }, action) => {
@@ -34,6 +35,12 @@ export const allTasksReducer = (state = { tasks: [] }, action) => {
             return {
                 loading: false,
                 error: action.payload,
+            };
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null,
             };
         default:
             return state;
@@ -93,6 +100,12 @@ export const singleTaskReducer = (state = { task: {} }, action) => {
                 ...state,
                 isDeleted: false
             }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null,
+            };
 
         default:
             return state;

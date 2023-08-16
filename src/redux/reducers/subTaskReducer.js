@@ -18,6 +18,7 @@ import {
     SUBTASK_DELETE_SUCCESS,
     SUBTASK_DELETE_FAIL,
     SUBTASK_DELETE_RESET,
+    CLEAR_ERRORS,
 } from "../constants/subtaskConstants";
 
 export const allSubtasksReducer = (state = { subtasks: [] }, action) => {
@@ -36,6 +37,12 @@ export const allSubtasksReducer = (state = { subtasks: [] }, action) => {
             return {
                 loading: false,
                 error: action.payload,
+            };
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null,
             };
         default:
             return state;
@@ -100,6 +107,12 @@ export const singleSubtaskReducer = (state = { subtask: {} }, action) => {
             return {
                 ...state,
                 isDeleted: false,
+            };
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null,
             };
 
         default:

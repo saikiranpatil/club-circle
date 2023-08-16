@@ -17,11 +17,7 @@ exports.getClubs = catchAsyncError(async (req, res, next) => {
 
 // Get all clubs
 exports.getClub = catchAsyncError(async (req, res, next) => {
-    const club = await Club.findById(req.params.id);
-
-    if (!club) {
-        return next(new ErrorHandler(`Club not found with Id ${req.params.id}`, 401));
-    }
+    const club = req.club;
 
     let clubMembers = [];
 
@@ -75,14 +71,10 @@ exports.createClub = catchAsyncError(async (req, res, next) => {
 
 // set role
 exports.setRole = catchAsyncError(async (req, res, next) => {
+    const club = req.club;
+
     const { userId, role } = req.body;
-
-    const club = await Club.findById(req.params.id);
     const user = await User.findById(userId);
-
-    if (!club) {
-        return next(new ErrorHandler(`Club not found with Id ${req.params.id}`, 401));
-    }
 
     if (!user) {
         return next(new ErrorHandler(`User not found with Id ${userId}`, 401));
@@ -121,11 +113,7 @@ exports.setRole = catchAsyncError(async (req, res, next) => {
 
 // delete club
 exports.deleteClub = catchAsyncError(async (req, res, next) => {
-    const club = await Club.findById(req.params.id);
-
-    if (!club) {
-        return next(new ErrorHandler(`Club not found with id:${req.params.id}`));
-    }
+    const club = req.club;
 
     const tasksToBeDeleted = await Task.find({ club: club._id });
 

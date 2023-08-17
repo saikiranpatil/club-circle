@@ -1,12 +1,12 @@
-import React from 'react'
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const ProfileTaskCard = ({ task }) => {
     const completedSubtasksCount = task.subtasks?.filter((subtask) => subtask.completed).length;
     return (
         <li
             key={task._id}
-            className={`bg-white rounded-[10px] ring-[0.5px] ring-inset ring-gray-300 shadow-custom p-2 mb-4 flex flex-col justify-between ${task.status === "Completed" ? "opacity-50" : ""}`}
+            className={`bg-white rounded-[10px] shadow-custom p-2 mb-4 flex flex-col justify-between ${task.status === "Completed" ? "opacity-50" : ""}`}
         >
             <div className="flex flex-col justify-between mb-2">
                 <div className="flex justify-between">
@@ -81,5 +81,20 @@ const ProfileTaskCard = ({ task }) => {
         </li>
     )
 }
+
+ProfileTaskCard.propTypes = {
+    task: PropTypes.shape({
+        _id: PropTypes.string.isRequired,
+        status: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        subtasks: PropTypes.arrayOf(
+            PropTypes.shape({
+                _id: PropTypes.string.isRequired,
+                completed: PropTypes.bool.isRequired,
+                title: PropTypes.string.isRequired,
+            })
+        ),
+    }).isRequired,
+};
 
 export default ProfileTaskCard

@@ -3,8 +3,11 @@ import MetaData from '../Layout/MetaData'
 import { useDispatch, useSelector } from 'react-redux';
 import { clearErrors, forgotPassword } from '../../redux/actions/userAction';
 import { display } from '../Utils/utils';
+import { useNavigate } from 'react-router-dom';
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const ForgotPassword = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const { error, message, loading } = useSelector(
         (state) => state.forgotPassword
@@ -14,11 +17,7 @@ const ForgotPassword = () => {
 
     const forgotPasswordSubmit = (e) => {
         e.preventDefault();
-
-        const myForm = new FormData();
-
-        myForm.set("email", email);
-        dispatch(forgotPassword(myForm));
+        dispatch(forgotPassword(email));
     };
 
     useEffect(() => {
@@ -28,7 +27,8 @@ const ForgotPassword = () => {
         }
 
         if (message) {
-            alert.success(message);
+            display(message, "success");
+            navigate("/login");
         }
     }, [dispatch, error, message]);
     return (
@@ -75,9 +75,14 @@ const ForgotPassword = () => {
                         <div>
                             <button
                                 type="submit"
-                                className="flex w-full justify-center rounded-md bg-primary-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-custom hover:bg-primary-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
+                                className="flex w-full justify-center items-center gap-2 rounded-md bg-primary-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-custom hover:bg-primary-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
                             >
-                                Send Reset Link
+                                {
+                                    loading ?
+                                        <><AiOutlineLoading3Quarters className='animate-spin' /> Loading</>
+                                        :
+                                        <>Send Reset Link</>
+                                }
                             </button>
                         </div>
                     </form>

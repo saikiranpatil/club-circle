@@ -7,7 +7,7 @@ import { formatDate } from '../Utils/utils';
 import { Tooltip } from 'react-tooltip';
 import { AiFillDelete } from 'react-icons/ai';
 
-const ClubTask = ({ task, handleTaskDelete }) => {
+const ClubTask = ({ task, handleTaskDelete, role }) => {
     const completedSubtasksCount = task.subtasks.filter((subtask) => subtask.completed).length;
 
     return (
@@ -22,25 +22,23 @@ const ClubTask = ({ task, handleTaskDelete }) => {
                             <div className={`text-slate-800 font-medium capitalize break-all ${task.status === "Completed" ? "line-through" : ""}`}>
                                 {task.title}
                             </div>
-                            <button className='delete-task-btn' onClick={() => handleTaskDelete(task._id)}>
-                                <AiFillDelete className='fill-gray-300 hover:fill-black-800 my-1' />
-                            </button>
-                            <Tooltip anchorSelect='.delete-task-btn' place="bottom">
-                                Delete Task
-                            </Tooltip>
+                            {
+                                role && role === "cadmin" &&
+                                <>
+                                    <button className='delete-task-btn' onClick={() => handleTaskDelete(task._id)}>
+                                        <AiFillDelete className='fill-gray-300 hover:fill-black-800 my-1' />
+                                    </button>
+                                    <Tooltip anchorSelect='.delete-task-btn' place="bottom">
+                                        Delete Task
+                                    </Tooltip>
+                                </>
+                            }
                         </div>
                         <span className="text-sm text-gray-500 leading-normal break-all">
                             {task.description}
                         </span>
                     </div>
                     <div className="flex items-center justify-between mt-2">
-                        {/* <div className="flex -space-x-1 overflow-hidden">
-                            <img
-                                className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
-                                src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                alt=""
-                            />
-                        </div> */}
                         {task.subtasks?.length > 0 &&
                             <div className="flex items-center">
                                 <div className="flex gap-1 items-center">

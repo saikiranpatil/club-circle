@@ -11,7 +11,6 @@ export default defineConfig({
         // rewrite: (path) => path.replace(/^\/api\/v1/, '') // Optional, if your server doesn't expect the '/api/v1' prefix
       }
     },
-    host: true
   },
   plugins: [react()],
 })

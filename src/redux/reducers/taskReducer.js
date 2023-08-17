@@ -11,6 +11,7 @@ import {
     TASK_CREATE_RESET,
     TASK_UPDATE_REQUEST,
     TASK_UPDATE_SUCCESS,
+    TASK_UPDATE_RESET,
     TASK_UPDATE_FAIL,
     TASK_DELETE_REQUEST,
     TASK_DELETE_SUCCESS,
@@ -99,6 +100,12 @@ export const singleTaskReducer = (state = { task: {} }, action) => {
             return {
                 ...state,
                 isDeleted: false
+            }
+
+        case TASK_UPDATE_RESET:
+            return {
+                ...state,
+                isUpdated: false
             }
 
         case CLEAR_ERRORS:

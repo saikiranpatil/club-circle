@@ -25,7 +25,7 @@ async function sendEmail(options) {
         });
 
         const mailOptions = {
-            from: `Saikiran Patil <${process.env.SMTP_EMAIL_ADRESS}>`,
+            from: `Club Circle Email Provider <${process.env.SMTP_EMAIL_ADRESS}>`,
             to: options.email,
             subject: options.subject,
             text: options.message,
@@ -34,7 +34,7 @@ async function sendEmail(options) {
         const result = await transport.sendMail(mailOptions);
         return result;
     } catch (error) {
-        return error;
+        throw error;
     }
 }
 

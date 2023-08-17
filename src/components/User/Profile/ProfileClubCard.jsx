@@ -6,7 +6,7 @@ const ClubCard = ({ club }) => {
     const { isAuthenticated, user } = useSelector((state) => state.user);
     
     return (
-        <li key={club._id} className="bg-white rounded-[10px] ring-[0.5px] ring-inset ring-gray-300 shadow-custom grid grid-cols-3 justify-items-center text-sm justify-between w-full p-2">
+        <li key={club._id} className="bg-white rounded-[10px] shadow-custom grid grid-cols-3 justify-items-center text-sm justify-between w-full p-2">
             <p className="text-sm font-semibold capitalize leading-6 text-gray-900 mr-auto">
                 {club.name}
             </p>

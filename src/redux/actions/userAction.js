@@ -1,4 +1,3 @@
-import { getErrorMessage } from "../../components/Utils/utils";
 import {
     LOGIN_REQUEST,
     LOGIN_FAIL,
@@ -48,7 +47,7 @@ export const login = (email, password) => async (dispatch) => {
 
         dispatch({ type: LOGIN_SUCCESS, payload: data.user });
     } catch (error) {
-        dispatch({ type: LOGIN_FAIL, payload: getErrorMessage(error) });
+        dispatch({ type: LOGIN_FAIL, payload: error.response.data.message });
     }
 };
 
@@ -65,7 +64,7 @@ export const register = (userData) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: REGISTER_USER_FAIL,
-            payload: getErrorMessage(error),
+            payload: error.response.data.message,
         });
     }
 };
@@ -79,7 +78,7 @@ export const loadUser = () => async (dispatch) => {
 
         dispatch({ type: LOAD_USER_SUCCESS, payload: data.user });
     } catch (error) {
-        dispatch({ type: LOAD_USER_FAIL, payload: getErrorMessage(error) });
+        dispatch({ type: LOAD_USER_FAIL, payload: error.response.data.message });
     }
 };
 
@@ -90,7 +89,7 @@ export const logout = () => async (dispatch) => {
 
         dispatch({ type: LOGOUT_SUCCESS });
     } catch (error) {
-        dispatch({ type: LOGOUT_FAIL, payload: getErrorMessage(error) });
+        dispatch({ type: LOGOUT_FAIL, payload: error.response.data.message });
     }
 };
 
@@ -107,7 +106,7 @@ export const updateProfile = (userData) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: UPDATE_PROFILE_FAIL,
-            payload: getErrorMessage(error),
+            payload: error.response.data.message,
         });
     }
 };
@@ -129,7 +128,7 @@ export const updatePassword = (passwords) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: UPDATE_PASSWORD_FAIL,
-            payload: getErrorMessage(error),
+            payload: error.response.data.message,
         });
     }
 };
@@ -147,7 +146,7 @@ export const forgotPassword = (email) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: FORGOT_PASSWORD_FAIL,
-            payload: getErrorMessage(error),
+            payload: error.response.data.message,
         });
     }
 };
@@ -169,7 +168,7 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: RESET_PASSWORD_FAIL,
-            payload: getErrorMessage(error),
+            payload: error.response.data.message,
         });
     }
 };
@@ -182,7 +181,7 @@ export const getAllUsers = () => async (dispatch) => {
 
         dispatch({ type: ALL_USERS_SUCCESS, payload: data.users });
     } catch (error) {
-        dispatch({ type: ALL_USERS_FAIL, payload: getErrorMessage(error) });
+        dispatch({ type: ALL_USERS_FAIL, payload: error.response.data.message });
     }
 };
 

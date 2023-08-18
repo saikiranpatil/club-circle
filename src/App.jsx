@@ -11,6 +11,7 @@ import Task from './components/Task/Task';
 import AddTask from './components/Club/AddTask';
 import AddClub from './components/Club/AddClub';
 import EditProfile from './components/User/Profile/EditProfile';
+import ResetPassword from './components/User/ResetPassword';
 
 function App() {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ function App() {
           <Route path='/login' exact element={<Login />} />
           <Route path='/register' exact element={<Register />} />
           <Route path='/forgot' exact element={<ForgotPassword />} />
+          <Route path='/password/reset/:id' exact element={<ResetPassword />} />
           <Route element={<ProtetedRoute />}>
             <Route path='/' exact element={<Profile />} />
             <Route path='/profile/edit' exact element={<EditProfile />} />

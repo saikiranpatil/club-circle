@@ -17,7 +17,6 @@ import {
     SUBTASK_DELETE_FAIL,
     CLEAR_ERRORS
 } from "../constants/subtaskConstants";
-import { getErrorMessage } from '../../components/Utils/utils';
 
 // Get All Subtasks
 export const getAllSubtasks = (taskId) => async (dispatch) => {
@@ -33,7 +32,7 @@ export const getAllSubtasks = (taskId) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: SUBTASK_ALL_FAIL,
-            payload: getErrorMessage(error),
+            payload: error.response.data.message,
         });
     }
 };
@@ -52,7 +51,7 @@ export const getSingleSubtask = (subtaskId) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: SUBTASK_SINGLE_FAIL,
-            payload: getErrorMessage(error),
+            payload: error.response.data.message,
         });
     }
 };
@@ -72,7 +71,7 @@ export const createSubtask = (taskId, subtaskData) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: SUBTASK_CREATE_FAIL,
-            payload: getErrorMessage(error),
+            payload: error.response.data.message,
         });
     }
 };
@@ -92,7 +91,7 @@ export const updateSubtask = (subtaskId, subtaskData) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: SUBTASK_UPDATE_FAIL,
-            payload: getErrorMessage(error),
+            payload: error.response.data.message,
         });
     }
 };
@@ -111,7 +110,7 @@ export const deleteSubtask = (subtaskId) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: SUBTASK_DELETE_FAIL,
-            payload: getErrorMessage(error),
+            payload: error.response.data.message,
         });
     }
 };

@@ -72,14 +72,6 @@ export const display = (message, type) => {
 
 }
 
-export const getErrorMessage = (error) => {
-    const regex = /Error: (.+?)<br>/;
-    const match = error.response.data.match(regex);
-
-    const errorMessage = match ? match[1] : "Unknown error";
-    return errorMessage;
-}
-
 export const formatDate = (d) => {
     const date = new Date(d);
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];

@@ -59,11 +59,16 @@ export const singleTaskReducer = (state = { task: {} }, action) => {
                 loading: true,
             };
 
-        case TASK_SINGLE_SUCCESS:
         case TASK_CREATE_SUCCESS:
             return {
                 loading: false,
                 success: true,
+                task: action.payload,
+            };
+
+        case TASK_SINGLE_SUCCESS:
+            return {
+                loading: false,
                 task: action.payload,
             };
 

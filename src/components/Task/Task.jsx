@@ -150,7 +150,7 @@ const Task = () => {
                                     value={assignee}
                                     onChange={handleInputChange}
                                 >
-                                    {task?.clubMembers?.map((member) =>
+                                    {task?.clubMembers?.filter(member => member.role === "cadmin").map((member) =>
                                         <option key={member._id} value={member._id}>
                                             {member.name}
                                         </option>

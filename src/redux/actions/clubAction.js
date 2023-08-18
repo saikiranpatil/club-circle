@@ -17,7 +17,6 @@ import {
     CLUB_DELETE_FAIL,
     CLEAR_ERRORS
 } from "../constants/clubConstants";
-import { getErrorMessage } from '../../components/Utils/utils';
 
 // Get All Clubs
 export const getAllClubs = () => async (dispatch) => {
@@ -33,7 +32,7 @@ export const getAllClubs = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: CLUB_ALL_FAIL,
-            payload: getErrorMessage(error),
+            payload: error.response.data.message,
         });
     }
 };
@@ -52,7 +51,7 @@ export const getSingleClub = (clubId) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: CLUB_SINGLE_FAIL,
-            payload: getErrorMessage(error),
+            payload: error.response.data.message,
         });
     }
 };
@@ -72,7 +71,7 @@ export const createClub = (clubData) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: CLUB_CREATE_FAIL,
-            payload: getErrorMessage(error),
+            payload: error.response.data.message,
         });
     }
 };
@@ -92,7 +91,7 @@ export const setClubRole = (clubId, roleData) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: CLUB_SET_ROLE_FAIL,
-            payload: getErrorMessage(error),
+            payload: error.response.data.message,
         });
     }
 };
@@ -111,7 +110,7 @@ export const deleteClub = (clubId) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: CLUB_DELETE_FAIL,
-            payload: getErrorMessage(error),
+            payload: error.response.data.message,
         });
     }
 };

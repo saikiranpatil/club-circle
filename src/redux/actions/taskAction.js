@@ -17,7 +17,6 @@ import {
   TASK_DELETE_FAIL,
   CLEAR_ERRORS
 } from "../constants/taskConstants";
-import { getErrorMessage } from '../../components/Utils/utils';
 
 // Get All Tasks
 export const getAllTasks = (id) => async (dispatch) => {
@@ -33,7 +32,7 @@ export const getAllTasks = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: TASK_ALL_FAIL,
-      payload: getErrorMessage(error),
+      payload: error.response.data.message,
     });
   }
 };
@@ -52,7 +51,7 @@ export const getSingleTask = (taskId) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: TASK_SINGLE_FAIL,
-      payload: getErrorMessage(error)
+      payload: error.response.data.message
     });
   }
 };
@@ -72,7 +71,7 @@ export const createTask = (clubId, taskData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: TASK_CREATE_FAIL,
-      payload: getErrorMessage(error),
+      payload: error.response.data.message,
     });
   }
 };
@@ -92,7 +91,7 @@ export const updateTask = (taskId, taskData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: TASK_UPDATE_FAIL,
-      payload: getErrorMessage(error),
+      payload: error.response.data.message,
     });
   }
 };
@@ -111,7 +110,7 @@ export const deleteTask = (taskId) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: TASK_DELETE_FAIL,
-      payload: getErrorMessage(error),
+      payload: error.response.data.message,
     });
   }
 };

@@ -3,7 +3,7 @@
 Club Circle empowers diverse teams to efficiently achieve their objectives by simplifying complex projects into manageable segments through user tasks and subtasks. Streamlining collaboration, optimizing work distribution, and effortless progress tracking are integral features of Club Circle's comprehensive task management capabilities.
 
 ## Demo
-[Demo Video Placeholder]
+https://github.com/saikiranpatil/club-circle/assets/84263946/454a86cb-93e1-4e79-a15e-b3108899508c
 
 ## Installation Instructions
 

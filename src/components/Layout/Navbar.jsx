@@ -11,7 +11,7 @@ const Navbar = () => {
 
   const logOutClick = () => {
     dispatch(logout());
-    display("Logged Out Sucessfully", "sucess");
+    display("Logged Out");
     navigate("/login");
   };
 

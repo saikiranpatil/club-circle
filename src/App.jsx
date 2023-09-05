@@ -27,7 +27,7 @@ function App() {
           <Route path='/login' exact element={<Login />} />
           <Route path='/register' exact element={<Register />} />
           <Route path='/forgot' exact element={<ForgotPassword />} />
-          <Route path='/password/reset/:id' exact element={<ResetPassword />} />
+          <Route path='/password/reset/:token' exact element={<ResetPassword />} />
           <Route element={<ProtetedRoute />}>
             <Route path='/' exact element={<Profile />} />
             <Route path='/profile/edit' exact element={<EditProfile />} />

@@ -32,15 +32,15 @@ const AddSubtask = () => {
 
     useEffect(() => {
         if (error) {
-            display(error, "warning");
+            display(error, "error");
             dispatch(clearErrors());
         }
         if (isUpdated) {
-            display("Subtask Updated sucessfully", "info");
+            display("Subtask Updated successfully", "info");
             dispatch({ type: SUBTASK_UPDATE_RESET });
         }
         if (success) {
-            display("Subtask Created sucessfully", "info");
+            display("Subtask Created successfully", "info");
             setFormData({
                 title: '',
                 description: '',

@@ -5,6 +5,7 @@ import { clearErrors, forgotPassword } from '../../redux/actions/userAction';
 import { display } from '../Utils/utils';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { FORGOT_PASSWORD_RESET } from '../../redux/constants/userConstants';
 
 const ForgotPassword = () => {
     const navigate = useNavigate();
@@ -22,13 +23,14 @@ const ForgotPassword = () => {
 
     useEffect(() => {
         if (error) {
-            display(error, "warning");
+            display(error, "error");
             dispatch(clearErrors());
         }
 
         if (message) {
-            display(message, "success");
+            display(message);
             navigate("/login");
+            dispatch({ type: FORGOT_PASSWORD_RESET });
         }
     }, [dispatch, error, message, navigate]);
     return (

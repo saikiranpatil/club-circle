@@ -4,13 +4,14 @@ const Club = require("../model/clubModel");
 const User = require("../model/userModel");
 const Task = require("../model/taskModel");
 const Subtask = require("../model/subtaskModel");
+const sendEmail = require("../utils/sendEmail");
 
 // Get all clubs
 exports.getClubs = catchAsyncError(async (req, res, next) => {
     const clubs = await Club.find();
 
     res.status(200).json({
-        sucess: true,
+        success: true,
         clubs
     })
 })
@@ -47,7 +48,7 @@ exports.getClub = catchAsyncError(async (req, res, next) => {
     const clubWithDetails = { ...club.toObject(), members: clubMembers, tasks: tasksWithSubtasks };
 
     res.status(200).json({
-        sucess: true,
+        success: true,
         club: clubWithDetails
     })
 })
@@ -64,7 +65,7 @@ exports.createClub = catchAsyncError(async (req, res, next) => {
     await club.save();
 
     res.status(200).json({
-        sucess: true,
+        success: true,
         club
     })
 })
@@ -87,12 +88,12 @@ exports.setRole = catchAsyncError(async (req, res, next) => {
 
             res.status(200).json({
                 success: true,
-                message: `Removed user with Id ${userId} from club members`
+                message: `${user.name} was removed from this Club`
             });
         } else {
             res.status(200).json({
                 success: true,
-                message: `User with Id ${userId} was not a member of the club`
+                message: `${user.name} was not a member of this club`
             });
         }
     } else {
@@ -103,10 +104,24 @@ exports.setRole = catchAsyncError(async (req, res, next) => {
         club.members.set(userId, role);
         await club.save();
 
+        const message = `Your have been assigned as ${role === "cadmin" ? "Club Admin" : "Member"} in the club ${club.name}
+        \n \n click link below to visit the Club Page 
+        \n \n ${req.protocol}://${req.get('host')}/club/${club._id}`;
+
+        try {
+            await sendEmail({
+                email: user.email,
+                subject: `🎉 You have been Added to "${club.name}" Club in Club Circle`,
+                message
+            })
+        } catch (err) {
+            console.log("error while sending mail to club member", err);
+        }
+
         res.status(200).json({
             success: true,
             club,
-            message: `User with Id ${userId} was added to the club`
+            message: `${user.name} was added to the club as ${role === "cadmin" ? "Club Admin" : "Club Member"}`
         });
     }
 });
@@ -128,7 +143,7 @@ exports.deleteClub = catchAsyncError(async (req, res, next) => {
     await Club.deleteOne({ _id: club._id });
 
     res.status(200).json({
-        sucess: true,
+        success: true,
         message: 'Club deleted successfully',
     })
 })

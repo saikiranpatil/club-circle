@@ -32,13 +32,13 @@ const AddTask = () => {
 
     useEffect(() => {
         if (error) {
-            display(error, "warning");
+            display(error, "error");
             dispatch(clearErrors);
 
         }
 
         if (success) {
-            display("Task created Sucessfully", "Sucess");
+            display("Task created successfully", "success");
             navigate("/club/" + club._id);
             dispatch({ type: TASK_CREATE_RESET });
         }

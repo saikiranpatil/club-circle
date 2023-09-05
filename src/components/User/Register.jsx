@@ -53,7 +53,7 @@ const Register = () => {
 
     useEffect(() => {
         if (error) {
-            display(error, "warning");
+            display(error, "error");
             dispatch(clearErrors());
         }
 

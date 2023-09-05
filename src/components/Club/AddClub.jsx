@@ -27,12 +27,12 @@ const AddClub = () => {
 
   useEffect(() => {
     if (error) {
-      display(error, "warning");
+      display(error, "error");
       dispatch(clearErrors());
     }
 
     if (success) {
-      display("Club created Sucessfully", "success");
+      display("Club created successfully", "success");
       navigate("/");
       dispatch(loadUser());
       dispatch({ type: CLUB_CREATE_RESET });

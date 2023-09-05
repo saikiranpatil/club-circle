@@ -14,8 +14,10 @@ const cloudinary = require("cloudinary")
 exports.registerUser = catchAsyncError(async (req, res, next) => {
     const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
         folder: "avatars",
-        width: 250,
-        crop: "scale",
+        height: 800,
+        width: 800,
+        crop: "thumb",
+        gravity: "faces",
     });
 
     const { name, email, password, about } = req.body;
@@ -66,7 +68,7 @@ exports.logoutUser = catchAsyncError(async (req, res, next) => {
     });
 
     res.status(200).json({
-        sucess: true,
+        success: true,
         message: "logged Out"
     })
 })
@@ -94,8 +96,8 @@ exports.forgotPassword = catchAsyncError(async (req, res, next) => {
         })
 
         res.status(200).json({
-            sucess: true,
-            message: `email has been sent to ${user.email} sucessfully`
+            success: true,
+            message: `email has been sent to ${user.email} successfully`
         })
 
     } catch (err) {
@@ -110,7 +112,6 @@ exports.forgotPassword = catchAsyncError(async (req, res, next) => {
 
 // forget password
 exports.resetPassword = catchAsyncError(async (req, res, next) => {
-    console.log(req.params.token);
     const resetPasswordToken = crypto.createHash("sha256").update(req.params.token).digest("hex");
 
     const user = await User.findOne({
@@ -194,7 +195,7 @@ exports.getUserDetails = catchAsyncError(async function (req, res, next) {
     };
 
     res.status(200).json({
-        sucess: true,
+        success: true,
         user
     })
 })
@@ -216,8 +217,10 @@ exports.updateProfile = catchAsyncError(async (req, res, next) => {
 
         const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
             folder: "avatars",
-            width: 150,
-            crop: "scale",
+            height: 800,
+            width: 800,
+            crop: "thumb",
+            gravity: "faces",
         });
 
         newUserData.avatar = {
@@ -246,7 +249,7 @@ exports.getSingleUser = exports.getSingleUser = catchAsyncError(async function (
     }
 
     res.status(200).json({
-        sucess: true,
+        success: true,
         user
     })
 })
@@ -270,7 +273,7 @@ exports.updateUserRole = catchAsyncError(async function (req, res, next) {
     });
 
     res.status(200).json({
-        sucess: true,
+        success: true,
         user
     })
 })
@@ -295,7 +298,7 @@ exports.updateUser = catchAsyncError(async function (req, res, next) {
     });
 
     res.status(200).json({
-        sucess: true,
+        success: true,
         user
     })
 })
@@ -305,14 +308,16 @@ exports.updateUser = catchAsyncError(async function (req, res, next) {
 exports.deleteUser = catchAsyncError(async function (req, res, next) {
     const user = await User.findById(req.params.id);
 
+    
     if (!user) {
         return next(new ErrorHandler(`User not found with id:${req.params.id}`));
     }
 
+    await cloudinary.v2.uploader.destroy(user.avatar.public_id);
     await user.deleteOne({ _id: req.params.id });
 
     res.status(200).json({
-        sucess: true,
+        success: true,
         message: 'User deleted successfully'
     })
 })
@@ -322,7 +327,7 @@ exports.getAllUsers = catchAsyncError(async function (req, res, next) {
     const users = await User.find();
 
     res.status(200).json({
-        sucess: true,
+        success: true,
         users
     })
 })

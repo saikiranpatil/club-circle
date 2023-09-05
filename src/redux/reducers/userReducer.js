@@ -21,9 +21,11 @@ import {
     FORGOT_PASSWORD_REQUEST,
     FORGOT_PASSWORD_SUCCESS,
     FORGOT_PASSWORD_FAIL,
+    FORGOT_PASSWORD_RESET,
     RESET_PASSWORD_REQUEST,
     RESET_PASSWORD_SUCCESS,
     RESET_PASSWORD_FAIL,
+    RESET_PASSWORD_RESET,
     ALL_USERS_REQUEST,
     ALL_USERS_SUCCESS,
     ALL_USERS_FAIL,
@@ -177,6 +179,18 @@ export const forgotPasswordReducer = (state = {}, action) => {
                 ...state,
                 loading: false,
                 message: action.payload,
+            };
+
+        case FORGOT_PASSWORD_RESET:
+            return {
+                ...state,
+                message: null,
+            };
+
+        case RESET_PASSWORD_RESET:
+            return {
+                ...state,
+                success: false,
             };
 
         case RESET_PASSWORD_SUCCESS:

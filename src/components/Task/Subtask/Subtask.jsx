@@ -47,7 +47,7 @@ const Subtask = ({ subtask, deleting, onDelete, role }) => {
         }
 
         if (error) {
-            display(error, "warning");
+            display(error, "error");
             dispatch(clearErrors());
         }
     }, [dispatch, error, subtask])

@@ -16,7 +16,7 @@ export const display = (message, type) => {
                 });
                 break;
 
-            case "sucess":
+            case "success":
                 toast.success(message, {
                     position: "bottom-center",
                     autoClose: 5000,

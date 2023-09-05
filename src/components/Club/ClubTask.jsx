@@ -72,7 +72,7 @@ const ClubTask = ({ task, handleTaskDelete, role }) => {
                                 <li key={subtask._id} className='mt-2 border-t pt-1 border-gray-300'>
                                     <label className="flex items-center">
                                         <span className='text-sm'>
-                                            <MdOutlineDone className={`w-4 h-4 ${subtask.completed ? "fill-sucess-600" : "fill-gray-500 opacity-30"}`} />
+                                            <MdOutlineDone className={`w-4 h-4 ${subtask.completed ? "fill-success-600" : "fill-gray-500 opacity-30"}`} />
                                         </span>
                                         <span className={`text-sm ml-3 capitalize ${subtask.completed ? "line-through text-gray-500 opacity-80" : "text-gray-600"}`}>
                                             {subtask.title}

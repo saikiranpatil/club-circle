@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const ProfileSubtasksCard = ({subtask}) => {
         return (
-            <div key={subtask._id} className="bg-white ring-gray-300 shadow-custom p-2">
+            <div key={subtask._id} className="bg-white rounded-[10px] ring-gray-300 shadow-custom p-2">
                 {/* Card header */}
                 <div className="flex items-center text-ellipsis grow-1 overflow-hidden whitespace-nowrap mb-2">
                     <div className="flex items-center justify-center rounded-full mr-2 shrink-0 w-8 h-8 bg-slate-900">

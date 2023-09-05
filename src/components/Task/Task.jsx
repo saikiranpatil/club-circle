@@ -8,6 +8,7 @@ import Subtasks from './Subtask/Subtasks';
 import AddSubtask from './Subtask/AddSubtask';
 import MetaData from '../Layout/MetaData';
 import profileImg from "../../images/profile.png";
+import { TASK_UPDATE_RESET } from '../../redux/constants/taskConstants';
 
 const Task = () => {
     const { id } = useParams();
@@ -16,8 +17,6 @@ const Task = () => {
 
     const { task, loading, isUpdated, error } = useSelector((state) => state.task);
     const { user } = useSelector((state) => state.user);
-
-    const [taskAssignee, setTaskAssignee] = useState(null);
 
     const [formData, setFormData] = useState({
         title: '',
@@ -36,8 +35,9 @@ const Task = () => {
         }
 
         if (isUpdated) {
-            display("Task Updated sucessfully", "info");
+            display("Task Updated successfully", "info");
             navigate("/club/" + task.club)
+            dispatch({ type: TASK_UPDATE_RESET });
         }
     }, [error, dispatch, isUpdated, navigate, task]);
 
@@ -53,6 +53,7 @@ const Task = () => {
                 description: task.description,
                 deadline: formatDateForForm(task.deadline),
                 status: task.status,
+                assignee: task.assignee?._id
             });
         }
     }, [task])

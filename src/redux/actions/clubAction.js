@@ -105,7 +105,7 @@ export const deleteClub = (clubId) => async (dispatch) => {
 
         dispatch({
             type: CLUB_DELETE_SUCCESS,
-            payload: data.sucess,
+            payload: data.success,
         });
     } catch (error) {
         dispatch({

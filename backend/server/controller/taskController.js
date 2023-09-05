@@ -1,9 +1,8 @@
 const Task = require('../model/taskModel');
-const Club = require('../model/clubModel');
 const User = require('../model/userModel');
 const catchAsyncError = require("../middleware/catchAsyncError");
-const ErrorHandler = require("../utils/errorHandler");
 const Subtask = require('../model/subtaskModel');
+const ErrorHandler = require('../utils/errorHandler');
 
 // create a task
 exports.createTask = catchAsyncError(async (req, res, next) => {
@@ -23,7 +22,7 @@ exports.createTask = catchAsyncError(async (req, res, next) => {
     await club.save();
 
     res.status(201).json({
-        sucess: true,
+        success: true,
         task
     });
 })
@@ -47,7 +46,7 @@ exports.getTask = catchAsyncError(async (req, res, next) => {
     const taskWithAssignee = { ...task.toObject(), assignee, clubMembers };
 
     res.status(200).json({
-        sucess: true,
+        success: true,
         task: taskWithAssignee
     })
 })
@@ -55,22 +54,22 @@ exports.getTask = catchAsyncError(async (req, res, next) => {
 
 // update Task
 exports.updateTask = catchAsyncError(async (req, res, next) => {
-    const newTaskData = {
+    const newTask = {
         title: req.body.title,
         description: req.body.description,
         deadline: req.body.deadline,
-        assignee: req.body.assignee,
-        status: req.body.status
+        status: req.body.status,
+        assignee: req.body.assignee
     };
 
-    const updatedTask = await Task.findByIdAndUpdate(req.params.id, newTaskData, {
+    const updatedTask = await Task.findByIdAndUpdate(req.params.id, newTask, {
         new: true,
         runValidators: true,
         useFindAndModify: false,
     });
 
     res.status(200).json({
-        sucess: true,
+        success: true,
         task: updatedTask
     })
 })
@@ -87,8 +86,8 @@ exports.deleteTask = catchAsyncError(async (req, res, next) => {
     await club.save();
 
     res.status(200).json({
-        sucess: true,
-        message: "Task Deleted Sucessfully",
+        success: true,
+        message: "Task Deleted successfully",
     })
 })
 
@@ -99,7 +98,7 @@ exports.getTasks = catchAsyncError(async (req, res, next) => {
     const tasks = await Task.find({ club: club._id });
 
     res.status(200).json({
-        sucess: true,
+        success: true,
         tasks
     })
 })

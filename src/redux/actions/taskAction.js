@@ -105,7 +105,7 @@ export const deleteTask = (taskId) => async (dispatch) => {
 
     dispatch({
       type: TASK_DELETE_SUCCESS,
-      payload: { success: data.sucess },
+      payload: { success: data.success },
     });
   } catch (error) {
     dispatch({

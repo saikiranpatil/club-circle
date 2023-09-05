@@ -1,21 +1,41 @@
 import MetaData from '../Layout/MetaData'
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { useParams } from 'react-router-dom'
-import { resetPassword } from '../../redux/actions/userAction'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate, useParams } from 'react-router-dom'
+import { clearErrors, resetPassword } from '../../redux/actions/userAction'
+import { display } from '../Utils/utils'
+import { RESET_PASSWORD_RESET } from '../../redux/constants/userConstants'
 
 const ResetPassword = () => {
-    const { id } = useParams();
+    const { token } = useParams();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+
+    const { error, success } = useSelector((state) => state.forgotPassword);
+
+    useEffect(() => {
+        if (error) {
+            display(error, "error");
+            dispatch(clearErrors());
+        }
+
+        if (success) {
+            display("Password Changed Successfully", "");
+            navigate("/");
+            dispatch({ type: RESET_PASSWORD_RESET });
+        }
+    }, [error, success, dispatch, navigate])
+
 
     const resetSubmit = () => {
         const myForm = new FormData();
         myForm.set("password", password);
         myForm.set("confirmPassword", confirmPassword);
 
-        dispatch(resetPassword(id, myForm));
+        dispatch(resetPassword(token, myForm));
     }
 
     return (

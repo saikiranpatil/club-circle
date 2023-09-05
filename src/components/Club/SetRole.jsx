@@ -8,7 +8,7 @@ import { CLUB_SET_ROLE_RESET } from '../../redux/constants/clubConstants';
 
 const SetRole = ({ setClubUpdated }) => {
     const { users, loading } = useSelector((state) => state.users);
-    const { error: setError, message } = useSelector((state) => state.setRole);
+    const { error: setError, message, loading: setLoading } = useSelector((state) => state.setRole);
     const { club } = useSelector((state) => state.club);
     const { user } = useSelector((state) => state.user);
 
@@ -19,25 +19,17 @@ const SetRole = ({ setClubUpdated }) => {
         dispatch(getAllUsers());
 
         if (setError) {
-            display(setError, "warning");
+            display(setError, "error");
             dispatch(clearErrors);
         }
     }, [dispatch, setError])
-
-    useEffect(() => {
-        if (message) {
-            display(message, "info");
-            dispatch({ type: CLUB_SET_ROLE_RESET });
-            setClubUpdated((val) => !val);
-        }
-    }, [message, dispatch, setClubUpdated])
 
 
     useEffect(() => {
         if (club.members && users && users?.length > 0) {
             const updatedUsers = users.map(usersDetails => {
                 if (usersDetails._id === user._id) {
-                    return null; 
+                    return null;
                 }
                 const clubMember = club.members.find(member => member._id === usersDetails._id);
                 return clubMember ? { ...usersDetails, role: clubMember.role } : usersDetails;
@@ -91,7 +83,7 @@ const SetRole = ({ setClubUpdated }) => {
                                             value='cadmin'
                                             onClick={() => setClubRole(user._id, 'cadmin')}
                                             checked={user.role === "cadmin"}
-                                            onChange={(e) => handleInputChange(user._id, "cadmin")}
+                                            onChange={() => handleInputChange(user._id, "cadmin")}
                                         />
                                         <label htmlFor={user._id + "cadmin"}>
                                             Admin

@@ -8,12 +8,13 @@ import { IoMdAdd } from "react-icons/io"
 import ClubTask from './ClubTask';
 import { Tooltip } from 'react-tooltip';
 import SetRole from './SetRole';
-import { AiFillDelete } from 'react-icons/ai';
+import { AiFillDelete, AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { loadUser } from '../../redux/actions/userAction';
 import { deleteTask } from '../../redux/actions/taskAction';
 import { TASK_DELETE_RESET } from '../../redux/constants/taskConstants';
 import MetaData from '../Layout/MetaData';
 import { clearErrors as clearTaskErrors } from '../../redux/actions/taskAction';
+import { CLUB_SET_ROLE_RESET } from '../../redux/constants/clubConstants';
 const taskTitles = [
     {
         "title": 'Not Started',
@@ -37,9 +38,7 @@ const Club = () => {
     const { user } = useSelector((state) => state.user);
     const { club, loading, isDeleted, error } = useSelector((state) => state.club);
     const { isDeleted: isTaskDeleted, error: taskError } = useSelector((state) => state.task);
-
-    const [clubUpdated, setClubUpdated] = useState(false);
-
+    const { message, loading: setLoading } = useSelector((state) => state.setRole);
 
     const handleDelete = () => {
         dispatch(deleteClub(club._id));
@@ -59,22 +58,26 @@ const Club = () => {
         }
 
         if (isTaskDeleted) {
-            display("Task Deleted Sucessfully", "success");
+            display("Task Deleted successfully", "success");
             dispatch({ type: TASK_DELETE_RESET });
         }
-    }, [id, dispatch, clubUpdated, isDeleted, navigate, isTaskDeleted]);
+
+        if (message) {
+            display(message, "info");
+            dispatch({ type: CLUB_SET_ROLE_RESET });
+        }
+    }, [id, message, dispatch, isDeleted, navigate, isTaskDeleted]);
 
     useEffect(() => {
         if (taskError) {
-            display(taskError, "warning");
+            display(taskError, "error");
             dispatch(clearTaskErrors());
         }
     }, [taskError, dispatch])
 
-
     useEffect(() => {
         if (error) {
-            display(error, "warning");
+            display(error, "error");
             navigate("/");
             dispatch(clearErrors());
         }
@@ -104,7 +107,7 @@ const Club = () => {
                                 </>
                             }
                         </div>
-                        <p className="text-sm text-gray-600 leading-normal break-all">
+                        <p className="text-sm text-gray-600 leading-normal break-all max-h-3xl">
                             {club.description}
                         </p>
                     </div>
@@ -118,7 +121,18 @@ const Club = () => {
                                     role && role === "cadmin" &&
                                     <>
                                         <button id='setroles' className="rounded-md bg-primary-500 p-2 text-sm font-semibold text-white hover:bg-primary-600 focus:bg-primary-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 flex items-center gap-1">
-                                            <IoMdAdd /> Set Roles
+                                            {
+                                                setLoading ?
+                                                    (
+                                                        <>
+                                                            < AiOutlineLoading3Quarters className='animate-spin' /> Loading
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <IoMdAdd /> Set Roles
+                                                        </>
+                                                    )
+                                            }
                                         </button>
                                         <Tooltip
                                             anchorSelect="#setroles"
@@ -127,7 +141,9 @@ const Club = () => {
                                             variant='light'
                                             clickable
                                         >
-                                            <SetRole setClubUpdated={setClubUpdated} />
+                                            {
+                                                setLoading ? <Loader /> : <SetRole />
+                                            }
                                         </Tooltip>
                                     </>
                                 }

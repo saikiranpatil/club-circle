@@ -67,12 +67,12 @@ const EditProfile = () => {
         }
 
         if (error) {
-            display(error, "warning");
+            display(error, "error");
             dispatch(clearErrors());
         }
 
         if (isUpdated) {
-            display("Profile Updated Sucessfully", "info");
+            display("Profile Updated successfully", "info");
             dispatch({ type: UPDATE_PROFILE_RESET });
             dispatch(loadUser());
             navigate("/");

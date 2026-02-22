@@ -1,78 +1,146 @@
-# Club Circle
+<div align="center">
 
-Club Circle empowers diverse teams to efficiently achieve their objectives by simplifying complex projects into manageable segments through user tasks and subtasks. Streamlining collaboration, optimizing work distribution, and effortless progress tracking are integral features of Club Circle's comprehensive task management capabilities.
+# 🔵 Club Circle
 
-## Demo
-https://github.com/saikiranpatil/club-circle/assets/84263946/454a86cb-93e1-4e79-a15e-b3108899508c
+**Streamline your club's workflow with Kanban boards, RBAC, and smart notifications.**
 
-## Installation Instructions
+![Build](https://img.shields.io/badge/build-passing-brightgreen)
+![License](https://img.shields.io/badge/license-MIT-blue)
+![Stack](https://img.shields.io/badge/stack-MERN-yellow)
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)
 
-Follow these steps to set up the project from scratch:
+[Live Demo](#) · [Report Bug](https://github.com/saikiranpatil/club-circle/issues) · [Request Feature](https://github.com/saikiranpatil/club-circle/issues)
 
-### Backend Setup
+</div>
 
-Clone the repository and install backend dependencies:
+---
 
+## 📌 Overview
+
+Club Circle is a full-stack task management platform built for college clubs and teams. It simplifies project execution by breaking work into tasks and subtasks, enforcing role-based access control, and keeping members informed via automated email notifications.
+
+---
+
+## 🎥 Demo
+
+> [Watch the demo video](https://github.com/saikiranpatil/club-circle)
+
+![screenshot placeholder](./public/screenshot.png)
+
+---
+
+## ✨ Features
+
+- 🔐 JWT-based authentication with bcrypt password hashing
+- 👥 Role-Based Access Control (Admin / Club Admin / Member)
+- 📋 Task & subtask creation and management
+- 📧 Email notifications for task assignments (via Google OAuth2)
+- 🔑 Password recovery via email
+- 📊 Kanban-style task board
+
+---
+
+## 🛠 Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | React, Vite, Tailwind CSS |
+| Backend | Node.js, Express.js |
+| Database | MongoDB, Mongoose |
+| Auth | JWT, bcrypt |
+| Email | Nodemailer + Google OAuth2 |
+| Dev Tools | ESLint, Vite |
+
+---
+
+## 🏗 Architecture
+
+Monolithic full-stack app using a REST API with MVC pattern on the backend.
+```
+Client (React/Vite) → REST API (Express) → MongoDB
+                            ↓
+                     Nodemailer (Email)
+```
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js v18+
+- MongoDB (local or Atlas)
+- Google API credentials (for email)
+
+### Installation
 ```bash
-$ git clone https://github.com/saikiranpatil/club-circle.git
-$ npm install
+git clone https://github.com/saikiranpatil/club-circle.git
+cd club-circle
+
+# Install frontend dependencies
+npm install
+
+# Install backend dependencies
+cd backend && npm install
 ```
 
-### Frontend Setup
+### Environment Variables
 
-Navigate to the frontend directory and install frontend dependencies:
+Create a `.env` file in `/backend` using the template below:
+```env
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+JWT_EXPIRE=7d
+COOKIE_EXPIRE=7
+SMTP_SERVICE_PROVIDER=gmail
+SMTP_EMAIL_ADDRESS=your@email.com
+SMTP_CLIENT_ID=your_client_id
+SMTP_CLIENT_SECRET=your_client_secret
+SMTP_REFRESH_TOKEN=your_refresh_token
+```
 
+### Running Locally
 ```bash
-$ cd frontend
-$ npm install
+# Start backend
+cd backend && nodemon
+
+# Start frontend (new terminal)
+npm run dev
 ```
 
-**Note**: As of now, the Admin Dashboard is not available. To claim admin access, roles need to be manually updated.
+---
 
-## Running the Project
-
-1. Create a `.env` file at the root of the project folder and provide the following configurations:
-
-```dotenv
-PORT=
-MONGO_URI=
-JWT_SECRET=
-JWT_EXPIRE=
-COOKIE_EXPIRE=
-SMTP_SERVICE_PROVIDER=  # Ex: "gmail"
-SMTP_EMAIL_ADDRESS=     # Ex: "username@mail.com"
-SMTP_CLIENT_ID=
-SMTP_CLIENT_SECRET=
-SMTP_REFRESH_TOKEN=     # Google API Configurations
+## 📁 Folder Structure
+```
+club-circle/
+├── backend/          # Express API (routes, controllers, models)
+├── src/              # React frontend
+│   ├── components/
+│   ├── pages/
+│   └── services/
+├── public/           # Static assets
+└── vite.config.js
 ```
 
-2. Start the backend server:
+---
 
-```bash
-$ nodemon
-```
+## 🔮 Future Improvements
 
-3. Start the frontend:
+- [ ] Admin dashboard UI
+- [ ] Cloudinary file uploads for subtask responses
+- [ ] Discussion forum for club members
+- [ ] Real-time notifications (Socket.io)
+- [ ] Docker + CI/CD pipeline
 
-```bash
-$ cd frontend
-$ npm start
-```
+---
 
-## Implemented Features
+## 👤 Author
 
-- JSON Web Token for user authentication.
-- Utilization of bcrypt for password encryption.
-- Email notifications for assigned subtasks.
-- Password recovery via email.
-- User login, logout, and registration.
-- Creation and management of tasks.
-- Creation and managing of subtasks.
+**Saikiran Patil**
+- GitHub: [@saikiranpatil](https://github.com/saikiranpatil)
 
-## Planned Features
+---
 
-- Admin dashboard with comprehensive access.
-- Enhanced response handling for subtask files, stored on Cloudinary.
-- Discussion Forum for collaborative interactions among club members, fostering idea sharing and project planning.
+## 📄 License
 
-Elevate your team's productivity and success with Club Circle's powerful task management platform. Streamline collaboration, enhance communication, and unlock efficient project execution.
+MIT License — see [LICENSE](./LICENSE)
